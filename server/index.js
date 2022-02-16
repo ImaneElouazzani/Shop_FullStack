@@ -1,7 +1,8 @@
+const PORT = 4000
 const express = require('express')
 const cors = require('cors')
 const app = express()
-const PORT = 4000
+const mongoDBClient = require('./mongoClient')
 
 app.use(cors())
 
@@ -10,5 +11,6 @@ app.get('/', (req, res) => {
 })
 
 app.listen(PORT,() => {
-    console.log(`Server up and running on port http://localhost:${PORT} 🎉`)
+    console.log(`Server up and running on port http://localhost:${PORT}`)
+    mongoDBClient.initialize()
 })
