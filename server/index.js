@@ -3,6 +3,14 @@ const express = require('express')
 const cors = require('cors')
 const app = express()
 const mongoDBClient = require('./mongoClient')
+const { graphqlHTTP } = require('express-graphql')
+const schema = require('./schemas/index')
+
+app.use(cors())
+
+app.get('/', (req, res) => {
+    res.send('Hello Express 🎉')
+})
 
 // API Rest
 
@@ -26,11 +34,15 @@ app.get('/products/:category', async (req, res) => {
     }
 })
 
-app.use(cors())
+// GraphQl UI
+app.use(
+    '/graphql',
+    graphqlHTTP({
+        schema: schema,
+        graphiql: true,
+    })
+)
 
-app.get('/', (req, res) => {
-    res.send('Hello Express 🎉')
-})
 
 app.listen(PORT,() => {
     console.log(`Server up and running on port http://localhost:${PORT}`)
